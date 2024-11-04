@@ -1,0 +1,53 @@
+import java.util.Scanner;
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+        Random randomValue = new Random();
+        Scanner input = new Scanner(System.in);
+        int tries = 10;
+        int randomNumber = randomValue.nextInt(100) + 1;
+        boolean guessed = false;
+
+        System.out.println("Welcome to the Number Guessing Game!");
+        System.out.println("I've picked a number between 1 and 100. You have " + tries + " attempts to guess it.");
+        System.out.println("If you want to quit at any time, just type 'q'.");
+
+        for (int i = 0; i < tries; i++) {
+            System.out.print("Attempt " + (i + 1) + ": What's your guess? ");
+            String userInput = input.nextLine();
+
+
+            if (userInput.equalsIgnoreCase("q")) {
+                System.out.println("Thanks for playing! Hope to see you again! Here is the number " + randomNumber);
+                return;
+            }
+
+            int guess;
+            try {
+                guess = Integer.parseInt(userInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Oops! That’s not a valid number. Please try again.");
+                i--;
+                continue;
+            }
+
+
+            if (guess == randomNumber) {
+                System.out.println("Congratulations! You guessed it right!");
+                guessed = true;
+                break;
+            } else if (guess < randomNumber) {
+                System.out.println("Nope! The number is higher than that. Keep trying!");
+            } else {
+                System.out.println("Not quite! The number is lower. Give it another shot!");
+            }
+        }
+
+        if (!guessed) {
+            System.out.println("Sorry, you've used all your attempts. The number was: " + randomNumber);
+        }
+
+        input.close();
+    }
+}
